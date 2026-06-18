@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using AddressManager.Models;
 using AddressManager.Repositories;
+using AddressManager.Services;
 using AddressManager.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,10 +15,12 @@ namespace AddressManager.Controllers;
 public class EnderecosController : Controller
 {
     private readonly IEnderecoRepository _enderecos;
+    private readonly IEnderecoCsvExporter _csvExporter;
 
-    public EnderecosController(IEnderecoRepository enderecos)
+    public EnderecosController(IEnderecoRepository enderecos, IEnderecoCsvExporter csvExporter)
     {
         _enderecos = enderecos;
+        _csvExporter = csvExporter;
     }
 
     /// <summary>Id do usuário autenticado, extraído das claims do cookie.</summary>
@@ -28,6 +31,16 @@ public class EnderecosController : Controller
     {
         var enderecos = await _enderecos.ListarPorUsuarioAsync(UsuarioId);
         return View(enderecos);
+    }
+
+    // GET: /Enderecos/ExportarCsv
+    [HttpGet]
+    public async Task<IActionResult> ExportarCsv()
+    {
+        var enderecos = await _enderecos.ListarPorUsuarioAsync(UsuarioId);
+        var conteudo = _csvExporter.Exportar(enderecos);
+        var nomeArquivo = $"enderecos_{DateTime.Now:yyyyMMdd_HHmmss}.csv";
+        return File(conteudo, "text/csv", nomeArquivo);
     }
 
     // GET: /Enderecos/Create
