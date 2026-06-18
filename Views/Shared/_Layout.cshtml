@@ -25,6 +25,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Início</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Enderecos" asp-action="Index">Meus Endereços</a>
+                            </li>
                         }
                     </ul>
                     @if (User.Identity?.IsAuthenticated == true)
@@ -46,6 +49,13 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            @if (TempData["Sucesso"] is string sucesso)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @sucesso
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+                </div>
+            }
             @RenderBody()
         </main>
     </div>

@@ -1,0 +1,55 @@
+@model IEnumerable<AddressManager.Models.Endereco>
+@{
+    ViewData["Title"] = "Meus Endereços";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Meus Endereços</h1>
+    <a class="btn btn-primary" asp-action="Create">
+        <span aria-hidden="true">+</span> Novo endereço
+    </a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        Você ainda não cadastrou nenhum endereço. Clique em <strong>Novo endereço</strong> para começar.
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>CEP</th>
+                    <th>Logradouro</th>
+                    <th>Nº</th>
+                    <th>Complemento</th>
+                    <th>Bairro</th>
+                    <th>Cidade</th>
+                    <th>UF</th>
+                    <th class="text-end">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var endereco in Model)
+                {
+                    <tr>
+                        <td>@endereco.CEP</td>
+                        <td>@endereco.Logradouro</td>
+                        <td>@endereco.Numero</td>
+                        <td>@(string.IsNullOrWhiteSpace(endereco.Complemento) ? "-" : endereco.Complemento)</td>
+                        <td>@endereco.Bairro</td>
+                        <td>@endereco.Cidade</td>
+                        <td>@endereco.UF</td>
+                        <td class="text-end text-nowrap">
+                            <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-route-id="@endereco.Id">Editar</a>
+                            <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@endereco.Id">Excluir</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

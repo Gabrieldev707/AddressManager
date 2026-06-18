@@ -30,7 +30,7 @@ public class AccountController : Controller
         // Usuário já autenticado não precisa ver a tela de login.
         if (User.Identity?.IsAuthenticated == true)
         {
-            return RedirectToHome();
+            return RedirectParaArea();
         }
 
         return View(new LoginViewModel { ReturnUrl = returnUrl });
@@ -75,7 +75,7 @@ public class AccountController : Controller
             return Redirect(model.ReturnUrl);
         }
 
-        return RedirectToHome();
+        return RedirectParaArea();
     }
 
     [HttpPost]
@@ -87,5 +87,5 @@ public class AccountController : Controller
         return RedirectToAction(nameof(Login));
     }
 
-    private IActionResult RedirectToHome() => RedirectToAction("Index", "Home");
+    private IActionResult RedirectParaArea() => RedirectToAction("Index", "Enderecos");
 }

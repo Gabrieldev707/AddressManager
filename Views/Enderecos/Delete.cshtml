@@ -1,0 +1,36 @@
+@model AddressManager.Models.Endereco
+@{
+    ViewData["Title"] = "Excluir endereço";
+}
+
+<h1 class="h3 mb-3">Excluir endereço</h1>
+
+<div class="alert alert-warning">
+    Tem certeza de que deseja excluir este endereço? Esta ação não pode ser desfeita.
+</div>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">CEP</dt>
+            <dd class="col-sm-9">@Model.CEP</dd>
+
+            <dt class="col-sm-3">Logradouro</dt>
+            <dd class="col-sm-9">@Model.Logradouro, @Model.Numero</dd>
+
+            <dt class="col-sm-3">Complemento</dt>
+            <dd class="col-sm-9">@(string.IsNullOrWhiteSpace(Model.Complemento) ? "-" : Model.Complemento)</dd>
+
+            <dt class="col-sm-3">Bairro</dt>
+            <dd class="col-sm-9">@Model.Bairro</dd>
+
+            <dt class="col-sm-3">Cidade/UF</dt>
+            <dd class="col-sm-9">@Model.Cidade / @Model.UF</dd>
+        </dl>
+    </div>
+</div>
+
+<form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+    <button type="submit" class="btn btn-danger">Excluir</button>
+    <a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a>
+</form>
