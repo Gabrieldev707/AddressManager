@@ -6,8 +6,9 @@
 <div class="row g-3">
     <div class="col-md-4">
         <label asp-for="CEP" class="form-label"></label>
-        <input asp-for="CEP" class="form-control" maxlength="9" placeholder="00000-000" />
+        <input asp-for="CEP" class="form-control" maxlength="9" placeholder="00000-000" inputmode="numeric" autocomplete="off" />
         <span asp-validation-for="CEP" class="text-danger small"></span>
+        <small id="cep-feedback" class="form-text text-muted">Digite o CEP para preencher o endereço automaticamente.</small>
     </div>
     <div class="col-md-8 d-flex align-items-end">
         <div class="w-100">
