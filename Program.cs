@@ -1,4 +1,7 @@
 using AddressManager.Data;
+using AddressManager.Repositories;
+using AddressManager.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,13 +13,35 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Autenticação manual baseada em cookie (sem ASP.NET Core Identity).
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";
+        options.LogoutPath = "/Account/Logout";
+        options.AccessDeniedPath = "/Account/Login";
+        options.ExpireTimeSpan = TimeSpan.FromHours(8);
+        options.SlidingExpiration = true;
+        options.Cookie.Name = "AddressManager.Auth";
+        options.Cookie.HttpOnly = true;
+    });
+
+// Serviços e repositórios da aplicação.
+builder.Services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+
 var app = builder.Build();
 
-// Aplica as migrations pendentes automaticamente ao iniciar a aplicação.
+// Aplica migrations pendentes e popula dados iniciais ao iniciar a aplicação.
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    var services = scope.ServiceProvider;
+    var db = services.GetRequiredService<AppDbContext>();
     db.Database.Migrate();
+
+    await DbSeeder.SeedAsync(
+        services.GetRequiredService<IUsuarioRepository>(),
+        services.GetRequiredService<IPasswordHasher>());
 }
 
 // Configure the HTTP request pipeline.
@@ -30,6 +55,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
