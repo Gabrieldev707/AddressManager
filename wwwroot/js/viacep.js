@@ -35,7 +35,10 @@
             return;
         }
         feedback.textContent = mensagem;
-        feedback.className = "form-text " + (tipo === "erro" ? "text-danger" : "text-muted");
+        const estado = tipo === "erro" ? " is-error"
+            : tipo === "loading" ? " is-loading"
+            : tipo === "ok" ? " is-ok" : "";
+        feedback.className = "hint" + estado;
     }
 
     async function buscarCep() {
@@ -44,7 +47,7 @@
             return;
         }
 
-        definirFeedback("Buscando endereço...", "info");
+        definirFeedback("Buscando endereço...", "loading");
         try {
             const resposta = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
             if (!resposta.ok) {
@@ -66,7 +69,7 @@
                 campos.complemento.value = dados.complemento || "";
             }
 
-            definirFeedback("", "info");
+            definirFeedback("Endereço preenchido automaticamente.", "ok");
             if (campos.numero) {
                 campos.numero.focus();
             }

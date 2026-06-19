@@ -3,34 +3,46 @@
     ViewData["Title"] = "Excluir endereço";
 }
 
-<h1 class="h3 mb-3">Excluir endereço</h1>
-
-<div class="alert alert-warning">
-    Tem certeza de que deseja excluir este endereço? Esta ação não pode ser desfeita.
-</div>
-
-<div class="card mb-3">
-    <div class="card-body">
-        <dl class="row mb-0">
-            <dt class="col-sm-3">CEP</dt>
-            <dd class="col-sm-9">@Model.CEP</dd>
-
-            <dt class="col-sm-3">Logradouro</dt>
-            <dd class="col-sm-9">@Model.Logradouro, @Model.Numero</dd>
-
-            <dt class="col-sm-3">Complemento</dt>
-            <dd class="col-sm-9">@(string.IsNullOrWhiteSpace(Model.Complemento) ? "-" : Model.Complemento)</dd>
-
-            <dt class="col-sm-3">Bairro</dt>
-            <dd class="col-sm-9">@Model.Bairro</dd>
-
-            <dt class="col-sm-3">Cidade/UF</dt>
-            <dd class="col-sm-9">@Model.Cidade / @Model.UF</dd>
-        </dl>
+<div class="crumbs reveal"><a asp-action="Index">Meus Endereços</a> / Excluir</div>
+<div class="page-head reveal">
+    <div>
+        <h1>Excluir endereço</h1>
+        <p class="sub">Confirme os dados antes de remover.</p>
     </div>
 </div>
 
-<form asp-action="Delete" asp-route-id="@Model.Id" method="post">
-    <button type="submit" class="btn btn-danger">Excluir</button>
-    <a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a>
-</form>
+<div class="reveal" style="max-width:680px; animation-delay:.05s">
+    <div class="alert alert--danger">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 9v4m0 3h.01M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Esta ação é permanente e <b>não pode ser desfeita</b>.</span>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <dl class="dl">
+                <dt>CEP</dt>
+                <dd><span class="cep">@Model.CEP</span></dd>
+
+                <dt>Logradouro</dt>
+                <dd>@Model.Logradouro, @Model.Numero</dd>
+
+                <dt>Complemento</dt>
+                <dd>@(string.IsNullOrWhiteSpace(Model.Complemento) ? "—" : Model.Complemento)</dd>
+
+                <dt>Bairro</dt>
+                <dd>@Model.Bairro</dd>
+
+                <dt>Cidade / UF</dt>
+                <dd>@Model.Cidade <span class="badge-uf">@Model.UF</span></dd>
+            </dl>
+
+            <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="form-actions">
+                <button type="submit" class="btn btn-danger">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 7h14M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2m1 0v12a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Excluir definitivamente
+                </button>
+                <a class="btn btn-ghost" asp-action="Index">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
