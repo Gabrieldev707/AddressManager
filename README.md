@@ -17,7 +17,14 @@ autenticação manual, CRUD por usuário, integração com a API ViaCEP e export
 2. **CRUD de endereços** (listar, criar, editar e excluir) restrito ao usuário logado.
 3. **Integração com ViaCEP**: ao informar o CEP, os campos são preenchidos via `fetch`.
 4. **Exportação CSV** dos endereços do usuário logado.
-5. **Scripts SQL** de criação das tabelas (alternativa às migrations).
+5. **Busca inteligente** na listagem: filtro instantâneo por logradouro, número,
+   bairro, cidade, UF e CEP, _case_ e acento-insensível (ex.: "Sao Jorge" encontra
+   "São Jorge").
+6. **Confirmação de exclusão** em modal, sem sair da página, preservando o
+   _antiforgery token_.
+7. **Interface responsiva** com tema próprio (navbar, painel e tabela que vira
+   cartões no mobile).
+8. **Scripts SQL** de criação das tabelas (alternativa às migrations).
 
 ## Pré-requisitos
 
