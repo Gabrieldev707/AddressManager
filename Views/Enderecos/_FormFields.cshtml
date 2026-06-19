@@ -1,47 +1,53 @@
 @model AddressManager.ViewModels.EnderecoViewModel
 
 <input type="hidden" asp-for="Id" />
-<div asp-validation-summary="ModelOnly" class="text-danger small mb-2"></div>
+<div asp-validation-summary="ModelOnly" class="alert alert--danger validation-summary-errors" data-vs></div>
 
-<div class="row g-3">
-    <div class="col-md-4">
-        <label asp-for="CEP" class="form-label"></label>
-        <input asp-for="CEP" class="form-control" maxlength="9" placeholder="00000-000" inputmode="numeric" autocomplete="off" />
-        <span asp-validation-for="CEP" class="text-danger small"></span>
-        <small id="cep-feedback" class="form-text text-muted">Digite o CEP para preencher o endereço automaticamente.</small>
-    </div>
-    <div class="col-md-8 d-flex align-items-end">
-        <div class="w-100">
-            <label asp-for="Logradouro" class="form-label"></label>
-            <input asp-for="Logradouro" class="form-control" />
-            <span asp-validation-for="Logradouro" class="text-danger small"></span>
+<div class="form-section">
+    <div class="section-title">Localização</div>
+    <div class="form-grid">
+        <div class="field grid-col-4">
+            <label asp-for="CEP" class="label"></label>
+            <input asp-for="CEP" class="input input--mono" maxlength="9" placeholder="00000-000" inputmode="numeric" autocomplete="off" />
+            <small id="cep-feedback" class="hint">Digite o CEP para preencher o endereço automaticamente.</small>
+            <span asp-validation-for="CEP" class="field-error"></span>
+        </div>
+        <div class="field grid-col-8">
+            <label asp-for="Logradouro" class="label"></label>
+            <input asp-for="Logradouro" class="input" placeholder="Rua, avenida, travessa…" />
+            <span asp-validation-for="Logradouro" class="field-error"></span>
         </div>
     </div>
+</div>
 
-    <div class="col-md-3">
-        <label asp-for="Numero" class="form-label"></label>
-        <input asp-for="Numero" class="form-control" />
-        <span asp-validation-for="Numero" class="text-danger small"></span>
-    </div>
-    <div class="col-md-9">
-        <label asp-for="Complemento" class="form-label"></label>
-        <input asp-for="Complemento" class="form-control" placeholder="Apto, bloco, referência (opcional)" />
-        <span asp-validation-for="Complemento" class="text-danger small"></span>
-    </div>
+<div class="form-section">
+    <div class="section-title">Detalhes</div>
+    <div class="form-grid">
+        <div class="field grid-col-3">
+            <label asp-for="Numero" class="label"></label>
+            <input asp-for="Numero" class="input input--mono" placeholder="123" />
+            <span asp-validation-for="Numero" class="field-error"></span>
+        </div>
+        <div class="field grid-col-9">
+            <label asp-for="Complemento" class="label">Complemento <span class="opt">· opcional</span></label>
+            <input asp-for="Complemento" class="input" placeholder="Apto, bloco, ponto de referência" />
+            <span asp-validation-for="Complemento" class="field-error"></span>
+        </div>
 
-    <div class="col-md-6">
-        <label asp-for="Bairro" class="form-label"></label>
-        <input asp-for="Bairro" class="form-control" />
-        <span asp-validation-for="Bairro" class="text-danger small"></span>
-    </div>
-    <div class="col-md-4">
-        <label asp-for="Cidade" class="form-label"></label>
-        <input asp-for="Cidade" class="form-control" />
-        <span asp-validation-for="Cidade" class="text-danger small"></span>
-    </div>
-    <div class="col-md-2">
-        <label asp-for="UF" class="form-label"></label>
-        <input asp-for="UF" class="form-control text-uppercase" maxlength="2" />
-        <span asp-validation-for="UF" class="text-danger small"></span>
+        <div class="field grid-col-6">
+            <label asp-for="Bairro" class="label"></label>
+            <input asp-for="Bairro" class="input" />
+            <span asp-validation-for="Bairro" class="field-error"></span>
+        </div>
+        <div class="field grid-col-4">
+            <label asp-for="Cidade" class="label"></label>
+            <input asp-for="Cidade" class="input" />
+            <span asp-validation-for="Cidade" class="field-error"></span>
+        </div>
+        <div class="field grid-col-2">
+            <label asp-for="UF" class="label"></label>
+            <input asp-for="UF" class="input input--mono text-uppercase" maxlength="2" placeholder="UF" />
+            <span asp-validation-for="UF" class="field-error"></span>
+        </div>
     </div>
 </div>

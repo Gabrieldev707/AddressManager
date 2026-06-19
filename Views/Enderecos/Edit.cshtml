@@ -3,16 +3,25 @@
     ViewData["Title"] = "Editar endereço";
 }
 
-<h1 class="h3 mb-3">Editar endereço</h1>
+<div class="crumbs reveal"><a asp-action="Index">Meus Endereços</a> / Editar</div>
+<div class="page-head reveal">
+    <div>
+        <h1>Editar endereço</h1>
+        <p class="sub">Atualize os dados deste endereço.</p>
+    </div>
+</div>
 
-<div class="card">
+<div class="card address-form-card reveal" style="animation-delay:.05s">
     <div class="card-body">
-        <form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+        <form asp-action="Edit" asp-route-id="@Model.Id" method="post" novalidate>
             <partial name="_FormFields" model="Model" />
 
-            <div class="mt-4">
-                <button type="submit" class="btn btn-primary">Salvar alterações</button>
-                <a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 13 4 4 10-11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Salvar alterações
+                </button>
+                <a class="btn btn-ghost" asp-action="Index">Cancelar</a>
             </div>
         </form>
     </div>
